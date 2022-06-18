@@ -1,8 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Constants.h"
 #include <vector>
-
-constexpr unsigned delimitersInterval = 10;
 
 class EventHandler
 {
@@ -21,6 +20,6 @@ public:
 		sf::Event event;
 	};
 
-	std::vector<EventData> HandleEvents(sf::RenderWindow& window);
+	std::vector<EventData> HandleEvents(sf::RenderWindow& window) const;
 };
 

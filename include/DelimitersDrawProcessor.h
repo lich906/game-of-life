@@ -1,16 +1,12 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+#include "Constants.h"
 #include "EventHandler.h"
 #include <queue>
 
-constexpr uint32_t delimiterColor = 0xF0F8FF44;
-constexpr sf::Uint8 fadingCoeff = 8;
-const sf::Time delayTime = sf::milliseconds(30);
-
-class MainLoopProcessor
+class DelimitersDrawProcessor
 {
 public:
-	MainLoopProcessor(unsigned width, unsigned height, const sf::String& title);
+	DelimitersDrawProcessor(unsigned width, unsigned height, const sf::String& title);
 
 	int Run();
 
@@ -20,12 +16,15 @@ private:
 	void DrawDelimiters();
 	void FadeOutDelimiters();
 	void LightUpDelimiter(bool horizontal, float position);
-	std::vector<sf::VertexArray> m_lightedUpDelimiters;
+	bool IsDelimiterVisible(const sf::VertexArray& delimiter) const;
 
 	bool ProcessEvent(const std::vector<EventHandler::EventData>& eventData);
+	
+	void RenderNextFrame();
+
 	EventHandler eventHandler;
 
-	void RenderNextFrame();
+	std::vector<sf::VertexArray> m_delimiters;
 
 	sf::RenderWindow m_window;
 };

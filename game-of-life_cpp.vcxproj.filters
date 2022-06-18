@@ -18,7 +18,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MainLoopProcessor.cpp">
+    <ClCompile Include="src\DelimitersDrawProcessor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\EventHandler.cpp">
@@ -29,10 +29,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\MainLoopProcessor.h">
+    <ClInclude Include="include\DelimitersDrawProcessor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\EventHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

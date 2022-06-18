@@ -1,8 +1,8 @@
-#include "include/MainLoopProcessor.h"
+#include "include/DelimitersDrawProcessor.h"
 
 int main()
 {
-	MainLoopProcessor processor(800, 600, "Srsly?");
+	DelimitersDrawProcessor processor(800, 600, "Srsly?");
 
 	return processor.Run();
 }

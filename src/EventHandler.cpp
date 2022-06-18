@@ -1,6 +1,6 @@
 #include "EventHandler.h"
 
-std::vector<EventHandler::EventData> EventHandler::HandleEvents(sf::RenderWindow& window)
+std::vector<EventHandler::EventData> EventHandler::HandleEvents(sf::RenderWindow& window) const
 {
 	std::vector<EventData> eventData;
 	sf::Event event;

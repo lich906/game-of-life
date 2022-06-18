@@ -145,14 +145,15 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\EventHandler.cpp" />
-    <ClCompile Include="src\MainLoopProcessor.cpp" />
+    <ClCompile Include="src\DelimitersDrawProcessor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Constants.h" />
     <ClInclude Include="include\EventHandler.h" />
-    <ClInclude Include="include\MainLoopProcessor.h" />
+    <ClInclude Include="include\DelimitersDrawProcessor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
