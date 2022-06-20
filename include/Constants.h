@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-constexpr unsigned delimitersInterval = 10;
-const sf::Color delimiterColor(0xF0F8FF88);
-constexpr int fadingCoeff = 8;
-const sf::Time delayTime = sf::milliseconds(30);
+constexpr unsigned CELL_SIZE = 20;
+const sf::Color DELIMITER_COLOR(0xAAAAAAFF);
+constexpr int DELIMITERS_FADING_COEFF = 8;
+constexpr int RENDER_FREQ = 10;

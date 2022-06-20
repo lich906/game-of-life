@@ -1,5 +1,4 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 #include "Constants.h"
 #include <vector>
 
@@ -22,4 +21,3 @@ public:
 
 	std::vector<EventData> HandleEvents(sf::RenderWindow& window) const;
 };
-
