@@ -8,10 +8,6 @@ public:
 
 	Window(unsigned width, unsigned height, const sf::String& title);
 
-	void Create();
-
-	void SetActive(bool active = true);
-
 	operator sf::RenderWindow&();
 
 	unsigned GetWidth() const;

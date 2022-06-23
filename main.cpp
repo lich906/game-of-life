@@ -12,9 +12,6 @@ int main()
 	CellsDrawer cellsDrawer;
 	InitialStateHandler initStateHandler;
 
-	window.Create();
-	window.SetActive();
-
 	cellsDrawer.AttachCellsState(initStateHandler.GetInitialState());
 
 	CombinedDrawCallback combinedDrawCallback;

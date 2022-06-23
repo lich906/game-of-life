@@ -4,17 +4,8 @@ Window::Window(unsigned width, unsigned height, const sf::String& title)
 	: m_width(width)
 	, m_height(height)
 	, m_title(title)
+	, m_window(sf::VideoMode(m_width, m_height), m_title)
 {
-}
-
-void Window::Create()
-{
-	m_window.create(sf::VideoMode(m_width, m_height), m_title);
-}
-
-void Window::SetActive(bool active)
-{
-	m_window.setActive(active);
 }
 
 Window::operator sf::RenderWindow&()
