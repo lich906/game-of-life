@@ -10,6 +10,7 @@ public:
 		None,
 		LightUpVerticalDelimiter,
 		LightUpHorizontalDelimiter,
+		SelectCell,
 		Closed
 	};
 

@@ -18,8 +18,12 @@ std::vector<EventHandler::EventData> EventHandler::HandleEvents(sf::RenderWindow
 				eventData.push_back({ EventType::LightUpHorizontalDelimiter, event });
 			}
 			break;
+		case sf::Event::MouseButtonReleased:
+			eventData.push_back({ EventType::SelectCell, event });
+			break;
 		case sf::Event::Closed:
 			eventData.push_back({ EventType::Closed });
+			break;
 		default:
 			break;
 		}

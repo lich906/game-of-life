@@ -1,12 +1,6 @@
 #include "DelimitersDrawer.h"
 #include <algorithm>
 
-DelimitersDrawer::DelimitersDrawer(unsigned width, unsigned height)
-	: m_width(width)
-	, m_height(height)
-{
-}
-
 Window::DrawCallback DelimitersDrawer::GetDrawCallback()
 {
 	return DrawCallback;
@@ -51,12 +45,12 @@ void DelimitersDrawer::LightUpDelimiter(bool horizontal, float position)
 	if (horizontal)
 	{
 		delimiter[0].position = sf::Vector2f(0, position);
-		delimiter[1].position = sf::Vector2f(m_width, position);
+		delimiter[1].position = sf::Vector2f(WINDOW_WIDTH, position);
 	}
 	else
 	{
 		delimiter[0].position = sf::Vector2f(position, 0);
-		delimiter[1].position = sf::Vector2f(position, m_height);
+		delimiter[1].position = sf::Vector2f(position, WINDOW_HEIGHT);
 	}
 
 	m_delimiters.push_back(delimiter);
@@ -67,9 +61,9 @@ bool DelimitersDrawer::IsDelimiterVisible(const sf::VertexArray& delimiter)
 	return delimiter[0].color.r > 0 || delimiter[0].color.g > 0 || delimiter[0].color.b > 0;
 }
 
-bool DelimitersDrawer::ProcessEvent(const std::vector<EventHandler::EventData>& eventData)
+bool DelimitersDrawer::ProcessEvents(const std::vector<EventHandler::EventData>& eventsData)
 {
-	for (const EventHandler::EventData& data : eventData)
+	for (const EventHandler::EventData& data : eventsData)
 	{
 		switch (data.type)
 		{
@@ -82,7 +76,7 @@ bool DelimitersDrawer::ProcessEvent(const std::vector<EventHandler::EventData>& 
 		case EventHandler::EventType::Closed:
 			return false;
 		default:
-			return false;
+			break;
 		}
 	}
 
