@@ -11,7 +11,9 @@ const sf::Color DEAD_CELL_COLOR(0x000000FF);
 
 constexpr int DELIMITERS_FADING_COEFF = 8;
 
-constexpr int RENDER_FREQ = 10;
+constexpr size_t RENDER_FREQ = 10;
+
+constexpr size_t STATE_REFRESH_FREQ = 500;
 
 constexpr unsigned WINDOW_WIDTH = 800;
 

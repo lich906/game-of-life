@@ -6,7 +6,14 @@
 class InitialStateHandler
 {
 public:
-	bool ProcessEvents(const std::vector<EventHandler::EventData>& eventsData);
+	enum class EventProcessingResult
+	{
+		Continue,
+		Exit,
+		Launch
+	};
+
+	EventProcessingResult ProcessEvents(const std::vector<EventHandler::EventData>& eventsData);
 
 	const std::vector<CellState>& GetInitialState();
 

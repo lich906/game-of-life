@@ -10,7 +10,16 @@ bool CellState::IsAlive() const
 	return m_alive;
 }
 
-void CellState::Revive()
+CellState& CellState::Revive()
 {
 	m_alive = true;
+
+	return *this;
+}
+
+CellState& CellState::Kill()
+{
+	m_alive = false;
+
+	return *this;
 }

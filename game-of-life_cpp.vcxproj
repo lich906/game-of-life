@@ -150,6 +150,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\CellsDrawer.cpp" />
     <ClCompile Include="src\CellState.cpp" />
+    <ClCompile Include="src\CellStateMachine.cpp" />
     <ClCompile Include="src\EventHandler.cpp" />
     <ClCompile Include="src\DelimitersDrawer.cpp" />
     <ClCompile Include="src\InitialStateHandler.cpp" />
@@ -161,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="include\CellsDrawer.h" />
     <ClInclude Include="include\CellState.h" />
+    <ClInclude Include="include\CellStateMachine.h" />
     <ClInclude Include="include\CombinedDrawCallback.hpp" />
     <ClInclude Include="include\Constants.h" />
     <ClInclude Include="include\EventHandler.h" />

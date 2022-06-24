@@ -21,6 +21,12 @@ std::vector<EventHandler::EventData> EventHandler::HandleEvents(sf::RenderWindow
 		case sf::Event::MouseButtonReleased:
 			eventData.push_back({ EventType::SelectCell, event });
 			break;
+		case sf::Event::KeyReleased:
+			if (event.key.code == sf::Keyboard::Enter)
+			{
+				eventData.push_back({ EventType::Launch });
+			}
+			break;
 		case sf::Event::Closed:
 			eventData.push_back({ EventType::Closed });
 			break;

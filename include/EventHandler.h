@@ -11,6 +11,7 @@ public:
 		LightUpVerticalDelimiter,
 		LightUpHorizontalDelimiter,
 		SelectCell,
+		Launch,
 		Closed
 	};
 

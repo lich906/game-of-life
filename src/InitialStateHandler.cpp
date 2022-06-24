@@ -1,7 +1,7 @@
 #include "InitialStateHandler.h"
 #include <algorithm>
 
-bool InitialStateHandler::ProcessEvents(const std::vector<EventHandler::EventData>& eventsData)
+InitialStateHandler::EventProcessingResult InitialStateHandler::ProcessEvents(const std::vector<EventHandler::EventData>& eventsData)
 {
 	for (const EventHandler::EventData& data : eventsData)
 	{
@@ -14,13 +14,15 @@ bool InitialStateHandler::ProcessEvents(const std::vector<EventHandler::EventDat
 			}
 			break;
 		case EventHandler::EventType::Closed:
-			return false;
+			return EventProcessingResult::Exit;
+		case EventHandler::EventType::Launch:
+			return EventProcessingResult::Launch;
 		default:
 			break;
 		}
 	}
 
-	return true;
+	return EventProcessingResult::Continue;
 }
 
 const std::vector<CellState>& InitialStateHandler::GetInitialState()

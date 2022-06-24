@@ -13,13 +13,20 @@ public:
 	{
 		int x;
 		int y;
+
+		bool operator!=(const Pos& other)
+		{
+			return other.x != x || other.y != y;
+		}
 	};
 
 	Pos GetPos() const;
 
 	bool IsAlive() const;
 
-	void Revive();
+	CellState& Revive();
+
+	CellState& Kill();
 
 private:
 	int m_x;
