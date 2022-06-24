@@ -45,7 +45,7 @@ void CellStateMachine::NextState()
 				m_bufferState.push_back(cellState);
 			}
 		}
-		else
+		else if (cellState.IsAlive())
 		{
 			m_bufferState.push_back(CellState(cellState).Kill());
 		}
