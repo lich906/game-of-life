@@ -18,6 +18,11 @@ public:
 		{
 			return other.x != x || other.y != y;
 		}
+
+		bool operator==(const Pos& other)
+		{
+			return !(*this != other);
+		}
 	};
 
 	Pos GetPos() const;

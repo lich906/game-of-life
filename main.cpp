@@ -46,7 +46,7 @@ int main()
 	if (result == InitialStateHandler::EventProcessingResult::Launch)
 	{
 		tick = 0;
-		CellStateMachine stateMachine;
+		CellStateMachine stateMachine(WINDOW_WIDTH / CELL_SIZE, WINDOW_HEIGHT / CELL_SIZE);
 
 		stateMachine.SetInitialState(initStateHandler.GetInitialState());
 		cellsDrawer.AttachCellsState(stateMachine.GetState());
