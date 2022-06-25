@@ -7,7 +7,7 @@
 
 int main()
 {
-	Window window(WINDOW_WIDTH, WINDOW_HEIGHT, "Game of life. Well... almost.");
+	Window window(WINDOW_WIDTH, WINDOW_HEIGHT, "Game of life. v0.1");
 	EventHandler eventHandler;
 	DelimitersDrawer delimitersDrawer;
 	CellsDrawer cellsDrawer;
