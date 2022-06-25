@@ -22,32 +22,26 @@ void CellStateMachine::NextState()
 		auto cellPos = cellState.GetPos();
 		adjacentLiveCells = CountAdjacentLiveCells(cellPos);
 
-		if (adjacentLiveCells)
+		
+		if (cellState.IsAlive())
 		{
-			if (cellState.IsAlive())
+			if (adjacentLiveCells < 2 || adjacentLiveCells > 3)
 			{
-				if (adjacentLiveCells < 2 || adjacentLiveCells > 3)
-				{
-					m_bufferState.push_back(CellState(cellState).Kill());
-				}
-				else
-				{
-					m_bufferState.push_back(cellState);
-				}
-			}
-			else if (adjacentLiveCells == 3)
-			{
-				m_bufferState.push_back(CellState(cellState).Revive());
-				AddAdjacentDeadCellsToBuffer(cellPos);
+				m_bufferState.push_back(CellState(cellState).Kill());
 			}
 			else
 			{
 				m_bufferState.push_back(cellState);
 			}
 		}
-		else if (cellState.IsAlive())
+		else if (adjacentLiveCells == 3)
 		{
-			m_bufferState.push_back(CellState(cellState).Kill());
+			m_bufferState.push_back(CellState(cellState).Revive());
+			AddAdjacentDeadCellsToBuffer(cellPos);
+		}
+		else
+		{
+			m_bufferState.push_back(cellState);
 		}
 	}
 
@@ -74,7 +68,10 @@ void CellStateMachine::PushToBufferIfNotExists(const CellState& cell)
 {
 	if (std::find_if(m_state.begin(), m_state.end(), [&cell](const CellState& cs) {
 		return cs.GetPos() == cell.GetPos();
-	}) == m_state.end())
+	}) == m_state.end() && 
+	std::find_if(m_bufferState.begin(), m_bufferState.end(), [&cell](const CellState& cs) {
+		return cs.GetPos() == cell.GetPos();
+	}) == m_bufferState.end())
 	{
 		m_bufferState.push_back(cell);
 	}
@@ -94,21 +91,37 @@ void CellStateMachine::AddAdjacentDeadCellsToBuffer(const CellState::Pos& cellPo
 		if (!topEdge)
 		{
 			PushToBufferIfNotExists(CellState(cellPos.x - 1, cellPos.y - 1, false));
-			PushToBufferIfNotExists(CellState(cellPos.x, cellPos.y - 1, false));
 		}
 
 		if (!bottomEdge)
 		{
 			PushToBufferIfNotExists(CellState(cellPos.x - 1, cellPos.y + 1, false));
-			PushToBufferIfNotExists(CellState(cellPos.x, cellPos.y + 1, false));
 		}
+	}
+
+	if (!topEdge)
+	{
+		PushToBufferIfNotExists(CellState(cellPos.x, cellPos.y - 1, false));
+	}
+
+	if (!bottomEdge)
+	{
+		PushToBufferIfNotExists(CellState(cellPos.x, cellPos.y + 1, false));
 	}
 
 	if (!rightEdge)
 	{
 		PushToBufferIfNotExists(CellState(cellPos.x + 1, cellPos.y, false));
-		PushToBufferIfNotExists(CellState(cellPos.x + 1, cellPos.y + 1, false));
-		PushToBufferIfNotExists(CellState(cellPos.x + 1, cellPos.y - 1, false));
+
+		if (!topEdge)
+		{
+			PushToBufferIfNotExists(CellState(cellPos.x + 1, cellPos.y - 1, false));
+		}
+
+		if (!bottomEdge)
+		{
+			PushToBufferIfNotExists(CellState(cellPos.x + 1, cellPos.y + 1, false));
+		}
 	}
 
 }
