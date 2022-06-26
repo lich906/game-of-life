@@ -28,6 +28,11 @@ bool Window::IsOpen() const
 	return m_window.isOpen();
 }
 
+void Window::Clear()
+{
+	m_window.clear();
+}
+
 void Window::SetDrawCallback(DrawCallback drawCallback, bool clearWindowBeforeDraw)
 {
 	m_drawCallback = drawCallback;

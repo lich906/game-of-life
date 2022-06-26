@@ -1,21 +1,17 @@
 #pragma once
-#include "EventHandler.h"
+#include "EventCollector.h"
 #include "CellState.h"
+#include "Constants.h"
 #include <vector>
 
 class InitialStateHandler
 {
 public:
-	enum class EventProcessingResult
-	{
-		Continue,
-		Exit,
-		Launch
-	};
+	const std::vector<CellState>& GetInitialState() const;
 
-	EventProcessingResult ProcessEvents(const std::vector<EventHandler::EventData>& eventsData);
+	void ResetState();
 
-	const std::vector<CellState>& GetInitialState();
+	EventResFlag::Flag ProcessEvents(const std::vector<EventCollector::EventData>& eventsData);
 
 private:
 	const int maxX = WINDOW_WIDTH / CELL_SIZE;

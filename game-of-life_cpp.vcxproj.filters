@@ -21,7 +21,7 @@
     <ClCompile Include="src\DelimitersDrawer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\EventHandler.cpp">
+    <ClCompile Include="src\EventCollector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Window.cpp">
@@ -39,6 +39,9 @@
     <ClCompile Include="src\CellStateMachine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\CommonEventProcessor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -47,7 +50,7 @@
     <ClInclude Include="include\DelimitersDrawer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\EventHandler.h">
+    <ClInclude Include="include\EventCollector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Constants.h">
@@ -69,6 +72,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\CellStateMachine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CommonEventProcessor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

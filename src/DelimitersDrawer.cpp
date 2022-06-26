@@ -61,26 +61,28 @@ bool DelimitersDrawer::IsDelimiterVisible(const sf::VertexArray& delimiter)
 	return delimiter[0].color.r > 0 || delimiter[0].color.g > 0 || delimiter[0].color.b > 0;
 }
 
-bool DelimitersDrawer::ProcessEvents(const std::vector<EventHandler::EventData>& eventsData)
+EventResFlag::Flag DelimitersDrawer::ProcessEvents(const std::vector<EventCollector::EventData>& eventsData)
 {
-	for (const EventHandler::EventData& data : eventsData)
+	for (const EventCollector::EventData& eventData : eventsData)
 	{
-		switch (data.type)
+		switch (eventData.type)
 		{
-		case EventHandler::EventType::LightUpVerticalDelimiter:
-			LightUpDelimiter(false, data.event.mouseMove.x);
+		case sf::Event::MouseMoved:
+			if (eventData.event.mouseMove.x % CELL_SIZE == 0)
+			{
+				LightUpDelimiter(false, eventData.event.mouseMove.x);
+			}
+			if (eventData.event.mouseMove.y % CELL_SIZE == 0)
+			{
+				LightUpDelimiter(true, eventData.event.mouseMove.y);
+			}
 			break;
-		case EventHandler::EventType::LightUpHorizontalDelimiter:
-			LightUpDelimiter(true, data.event.mouseMove.y);
-			break;
-		case EventHandler::EventType::Closed:
-			return false;
 		default:
 			break;
 		}
 	}
 
-	return true;
+	return EventResFlag::Continue;
 }
 
 void DelimitersDrawer::DrawCallback(sf::RenderWindow& renderWindow)

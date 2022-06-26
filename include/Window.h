@@ -15,6 +15,8 @@ public:
 
 	bool IsOpen() const;
 
+	void Clear();
+
 	void SetDrawCallback(DrawCallback drawCallback, bool clearWindowBeforeDraw = false);
 
 	void SetClearWindowBeforeDraw(bool value);

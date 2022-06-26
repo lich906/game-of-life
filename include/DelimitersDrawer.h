@@ -1,13 +1,13 @@
 #pragma once
 #include "Constants.h"
-#include "EventHandler.h"
+#include "EventCollector.h"
 #include "Window.h"
 #include <mutex>
 
 class DelimitersDrawer
 {
 public:
-	bool ProcessEvents(const std::vector<EventHandler::EventData>& eventsData);
+	EventResFlag::Flag ProcessEvents(const std::vector<EventCollector::EventData>& eventsData);
 
 	Window::DrawCallback GetDrawCallback();
 

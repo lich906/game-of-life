@@ -3,15 +3,22 @@
 #include "InitialStateHandler.h"
 #include "CombinedDrawCallback.hpp"
 #include "CellStateMachine.h"
+#include "CommonEventProcessor.h"
 #include <iostream>
+
+enum class Stage
+{
+	Initialization,
+	Game
+};
 
 int main()
 {
 	Window window(WINDOW_WIDTH, WINDOW_HEIGHT, "Game of life. v0.1");
-	EventHandler eventHandler;
 	DelimitersDrawer delimitersDrawer;
 	CellsDrawer cellsDrawer;
 	InitialStateHandler initStateHandler;
+	CellStateMachine stateMachine(WINDOW_WIDTH / CELL_SIZE, WINDOW_HEIGHT / CELL_SIZE);
 
 	cellsDrawer.AttachCellsState(initStateHandler.GetInitialState());
 
@@ -23,52 +30,62 @@ int main()
 	window.SetDrawCallback(combinedDrawCallback.Get());
 
 	size_t tick = 0;
-	auto handledEvents = eventHandler.HandleEvents(window);
 
-	InitialStateHandler::EventProcessingResult result;
-	while (
-		delimitersDrawer.ProcessEvents(handledEvents) && 
-		(result = initStateHandler.ProcessEvents(handledEvents)) != InitialStateHandler::EventProcessingResult::Launch
-	)
+	auto events = EventCollector::CollectEvents(window);
+
+	EventResFlag::Flag eventResFlags = 
+		delimitersDrawer.ProcessEvents(events) |
+		initStateHandler.ProcessEvents(events) |
+		CommonEventProcessor::ProcessEvents(events);
+
+	Stage stage = Stage::Initialization;
+
+	while (!(eventResFlags & EventResFlag::Exit))
 	{
-		if (tick == RENDER_FREQ)
+		if (!(tick % RENDER_FREQ))
 		{
 			window.Render();
-			tick = 0;
 		}
 
-		handledEvents = eventHandler.HandleEvents(window);
+		if (!(tick % STATE_REFRESH_FREQ) && stage == Stage::Game)
+		{
+			stateMachine.NextState();
+		}
+
+		if ((eventResFlags & EventResFlag::LaunchGame) && stage == Stage::Initialization)
+		{
+			stateMachine.SetInitialState(initStateHandler.GetInitialState());
+			cellsDrawer.AttachCellsState(stateMachine.GetState());
+
+			stage = Stage::Game;
+		}
+
+		if (eventResFlags & EventResFlag::ResetGame)
+		{
+			initStateHandler.ResetState();
+			cellsDrawer.AttachCellsState(initStateHandler.GetInitialState());
+			window.Clear();
+
+			stage = Stage::Initialization;
+		}
+
+		events = EventCollector::CollectEvents(window);
+
+		if (stage == Stage::Initialization)
+		{
+			eventResFlags = 
+				delimitersDrawer.ProcessEvents(events) |
+				initStateHandler.ProcessEvents(events);
+		}
+		else
+		{
+			eventResFlags = delimitersDrawer.ProcessEvents(events);
+		}
+
+		eventResFlags |= CommonEventProcessor::ProcessEvents(events);
 
 		sf::sleep(sf::milliseconds(1));
 		++tick;
-	}
-
-	if (result == InitialStateHandler::EventProcessingResult::Launch)
-	{
-		tick = 0;
-		CellStateMachine stateMachine(WINDOW_WIDTH / CELL_SIZE, WINDOW_HEIGHT / CELL_SIZE);
-
-		stateMachine.SetInitialState(initStateHandler.GetInitialState());
-		cellsDrawer.AttachCellsState(stateMachine.GetState());
-
-		while (delimitersDrawer.ProcessEvents(handledEvents))
-		{
-			if (!(tick % RENDER_FREQ))
-			{
-				window.Render();
-			}
-
-			if (tick == STATE_REFRESH_FREQ)
-			{
-				stateMachine.NextState();
-				tick = 0;
-			}
-
-			handledEvents = eventHandler.HandleEvents(window);
-
-			sf::sleep(sf::milliseconds(1));
-			++tick;
-		}
 	}
 
 	return 0;

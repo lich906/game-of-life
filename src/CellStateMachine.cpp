@@ -48,7 +48,7 @@ void CellStateMachine::NextState()
 	std::swap(m_state, m_bufferState);
 }
 
-const std::vector<CellState>& CellStateMachine::GetState()
+const std::vector<CellState>& CellStateMachine::GetState() const
 {
 	return m_state;
 }

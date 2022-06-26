@@ -1,33 +1,34 @@
 #include "InitialStateHandler.h"
 #include <algorithm>
 
-InitialStateHandler::EventProcessingResult InitialStateHandler::ProcessEvents(const std::vector<EventHandler::EventData>& eventsData)
+EventResFlag::Flag InitialStateHandler::ProcessEvents(const std::vector<EventCollector::EventData>& eventsData)
 {
-	for (const EventHandler::EventData& data : eventsData)
+	for (const EventCollector::EventData& eventData : eventsData)
 	{
-		switch (data.type)
+		switch (eventData.type)
 		{
-		case EventHandler::EventType::SelectCell:
-			if (data.event.mouseButton.button == sf::Mouse::Button::Left)
+		case sf::Event::EventType::MouseButtonReleased:
+			if (eventData.event.mouseButton.button == sf::Mouse::Button::Left)
 			{
-				AddCell(data.event.mouseButton.x, data.event.mouseButton.y);
+				AddCell(eventData.event.mouseButton.x, eventData.event.mouseButton.y);
 			}
 			break;
-		case EventHandler::EventType::Closed:
-			return EventProcessingResult::Exit;
-		case EventHandler::EventType::Launch:
-			return EventProcessingResult::Launch;
 		default:
 			break;
 		}
 	}
 
-	return EventProcessingResult::Continue;
+	return EventResFlag::Continue;
 }
 
-const std::vector<CellState>& InitialStateHandler::GetInitialState()
+const std::vector<CellState>& InitialStateHandler::GetInitialState() const
 {
 	return m_state;
+}
+
+void InitialStateHandler::ResetState()
+{
+	m_state.clear();
 }
 
 void InitialStateHandler::AddCell(int mouseX, int mouseY)

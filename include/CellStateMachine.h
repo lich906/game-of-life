@@ -11,7 +11,7 @@ public:
 
 	void NextState();
 
-	const std::vector<CellState>& GetState();
+	const std::vector<CellState>& GetState() const;
 
 private:
 	const int maxX, maxY;
