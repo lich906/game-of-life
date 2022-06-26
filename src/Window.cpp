@@ -31,6 +31,8 @@ bool Window::IsOpen() const
 void Window::Clear()
 {
 	m_window.clear();
+	m_window.display();
+	m_window.clear();
 }
 
 void Window::SetDrawCallback(DrawCallback drawCallback, bool clearWindowBeforeDraw)
