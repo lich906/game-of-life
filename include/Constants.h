@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
+namespace Default
+{
 constexpr unsigned CELL_SIZE = 10;
 
 const sf::Color DELIMITER_COLOR(0xAAAAAAFF);
@@ -13,8 +15,9 @@ constexpr int DELIMITERS_FADING_COEFF = 8;
 
 constexpr size_t RENDER_FREQ = 10;
 
-constexpr size_t STATE_REFRESH_FREQ = 100;
+constexpr size_t STATE_REFRESH_TIME = 100;
 
 constexpr unsigned WINDOW_WIDTH = 800;
 
 constexpr unsigned WINDOW_HEIGHT = 600;
+}

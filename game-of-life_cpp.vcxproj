@@ -152,6 +152,7 @@
     <ClCompile Include="src\CellState.cpp" />
     <ClCompile Include="src\CellStateMachine.cpp" />
     <ClCompile Include="src\CommonEventProcessor.cpp" />
+    <ClCompile Include="src\Config.cpp" />
     <ClCompile Include="src\EventCollector.cpp" />
     <ClCompile Include="src\DelimitersDrawer.cpp" />
     <ClCompile Include="src\InitialStateHandler.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="include\CellStateMachine.h" />
     <ClInclude Include="include\CombinedDrawCallback.hpp" />
     <ClInclude Include="include\CommonEventProcessor.h" />
+    <ClInclude Include="include\Config.h" />
     <ClInclude Include="include\Constants.h" />
     <ClInclude Include="include\EventCollector.h" />
     <ClInclude Include="include\DelimitersDrawer.h" />
