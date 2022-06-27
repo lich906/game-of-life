@@ -39,7 +39,7 @@ void CellStateMachine::NextState()
 			m_bufferState.push_back(CellState(cellState).Revive());
 			AddAdjacentDeadCellsToBuffer(cellPos);
 		}
-		else
+		else if (adjacentLiveCells)
 		{
 			m_bufferState.push_back(cellState);
 		}
