@@ -1,7 +1,7 @@
 #pragma once
 #include "Window.h"
 #include "CellState.h"
-#include "Constants.h"
+#include "Config.h"
 
 class CellsDrawer
 {

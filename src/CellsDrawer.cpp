@@ -22,17 +22,17 @@ void CellsDrawer::DrawCell(sf::RenderWindow& renderWindow, const CellState& cell
 {
 	auto cellPos = cellState.GetPos();
 
-	int leftTopX = cellPos.x * CELL_SIZE + 1;
-	int leftTopY = cellPos.y * CELL_SIZE + 1;
+	int leftTopX = cellPos.x * Config::GetCellSize() + 1;
+	int leftTopY = cellPos.y * Config::GetCellSize() + 1;
 
 	sf::ConvexShape cell(4);
 
 	cell.setPoint(0, sf::Vector2f(leftTopX, leftTopY));
-	cell.setPoint(1, sf::Vector2f(leftTopX + CELL_SIZE - 2, leftTopY));
-	cell.setPoint(2, sf::Vector2f(leftTopX + CELL_SIZE - 2, leftTopY + CELL_SIZE - 2));
-	cell.setPoint(3, sf::Vector2f(leftTopX, leftTopY + CELL_SIZE - 2));
+	cell.setPoint(1, sf::Vector2f(leftTopX + Config::GetCellSize() - 2, leftTopY));
+	cell.setPoint(2, sf::Vector2f(leftTopX + Config::GetCellSize() - 2, leftTopY + Config::GetCellSize() - 2));
+	cell.setPoint(3, sf::Vector2f(leftTopX, leftTopY + Config::GetCellSize() - 2));
 
-	cell.setFillColor(cellState.IsAlive() ? LIVE_CELL_COLOR : DEAD_CELL_COLOR);
+	cell.setFillColor(cellState.IsAlive() ? Config::GetLiveCellColor() : Config::GetDeadCellColor());
 
 	renderWindow.draw(cell);
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include "Constants.h"
+#include "Config.h"
 #include "EventCollector.h"
 #include "Window.h"
 #include <mutex>

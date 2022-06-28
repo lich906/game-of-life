@@ -22,12 +22,12 @@ void DelimitersDrawer::FadeOutDelimiters()
 	{
 		if (IsDelimiterVisible(delimiter))
 		{
-			delimiter[0].color.r = std::max(0, delimiter[0].color.r - DELIMITERS_FADING_COEFF);
-			delimiter[0].color.g = std::max(0, delimiter[0].color.g - DELIMITERS_FADING_COEFF);
-			delimiter[0].color.b = std::max(0, delimiter[0].color.b - DELIMITERS_FADING_COEFF);
-			delimiter[1].color.r = std::max(0, delimiter[1].color.r - DELIMITERS_FADING_COEFF);
-			delimiter[1].color.g = std::max(0, delimiter[1].color.g - DELIMITERS_FADING_COEFF);
-			delimiter[1].color.b = std::max(0, delimiter[1].color.b - DELIMITERS_FADING_COEFF);
+			delimiter[0].color.r = std::max(0, delimiter[0].color.r - Config::GetDelimitersFadingCoeff());
+			delimiter[0].color.g = std::max(0, delimiter[0].color.g - Config::GetDelimitersFadingCoeff());
+			delimiter[0].color.b = std::max(0, delimiter[0].color.b - Config::GetDelimitersFadingCoeff());
+			delimiter[1].color.r = std::max(0, delimiter[1].color.r - Config::GetDelimitersFadingCoeff());
+			delimiter[1].color.g = std::max(0, delimiter[1].color.g - Config::GetDelimitersFadingCoeff());
+			delimiter[1].color.b = std::max(0, delimiter[1].color.b - Config::GetDelimitersFadingCoeff());
 
 			visibleDelimiters.push_back(delimiter);
 		}
@@ -39,18 +39,18 @@ void DelimitersDrawer::FadeOutDelimiters()
 void DelimitersDrawer::LightUpDelimiter(bool horizontal, float position)
 {
 	sf::VertexArray delimiter(sf::Lines, 2);
-	delimiter[0].color = DELIMITER_COLOR;
-	delimiter[1].color = DELIMITER_COLOR;
+	delimiter[0].color = Config::GetDelimiterColor();
+	delimiter[1].color = Config::GetDelimiterColor();
 
 	if (horizontal)
 	{
 		delimiter[0].position = sf::Vector2f(0, position);
-		delimiter[1].position = sf::Vector2f(WINDOW_WIDTH, position);
+		delimiter[1].position = sf::Vector2f(Config::GetWindowWidth(), position);
 	}
 	else
 	{
 		delimiter[0].position = sf::Vector2f(position, 0);
-		delimiter[1].position = sf::Vector2f(position, WINDOW_HEIGHT);
+		delimiter[1].position = sf::Vector2f(position, Config::GetWindowHeight());
 	}
 
 	m_delimiters.push_back(delimiter);
@@ -68,11 +68,11 @@ EventResFlag::Flag DelimitersDrawer::ProcessEvents(const std::vector<EventCollec
 		switch (eventData.type)
 		{
 		case sf::Event::MouseMoved:
-			if (eventData.event.mouseMove.x % CELL_SIZE == 0)
+			if (eventData.event.mouseMove.x % Config::GetCellSize() == 0)
 			{
 				LightUpDelimiter(false, eventData.event.mouseMove.x);
 			}
-			if (eventData.event.mouseMove.y % CELL_SIZE == 0)
+			if (eventData.event.mouseMove.y % Config::GetCellSize() == 0)
 			{
 				LightUpDelimiter(true, eventData.event.mouseMove.y);
 			}

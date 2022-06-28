@@ -4,6 +4,7 @@
 #include "CombinedDrawCallback.hpp"
 #include "CellStateMachine.h"
 #include "CommonEventProcessor.h"
+#include "Config.h"
 #include <iostream>
 
 enum class Stage
@@ -14,11 +15,20 @@ enum class Stage
 
 int main()
 {
-	Window window(WINDOW_WIDTH, WINDOW_HEIGHT, "Game of life. v0.1");
+	try
+	{
+		Config::ReadFromFile("config.txt");
+	}
+	catch (std::exception& e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+
+	Window window(Config::GetWindowWidth(), Config::GetWindowHeight(), "Game of life. v0.3");
 	DelimitersDrawer delimitersDrawer;
 	CellsDrawer cellsDrawer;
 	InitialStateHandler initStateHandler;
-	CellStateMachine stateMachine(WINDOW_WIDTH / CELL_SIZE, WINDOW_HEIGHT / CELL_SIZE);
+	CellStateMachine stateMachine(Config::GetWindowWidth() / Config::GetCellSize(), Config::GetWindowHeight() / Config::GetCellSize());
 
 	cellsDrawer.AttachCellsState(initStateHandler.GetInitialState());
 
@@ -42,12 +52,12 @@ int main()
 
 	while (!(eventResFlags & EventResFlag::Exit))
 	{
-		if (!(tick % RENDER_FREQ))
+		if (!(tick % Config::GetFrameRefreshTime()))
 		{
 			window.Render();
 		}
 
-		if (!(tick % STATE_REFRESH_FREQ) && stage == Stage::Game)
+		if (!(tick % Config::GetStateRefreshTime()) && stage == Stage::Game)
 		{
 			stateMachine.NextState();
 		}

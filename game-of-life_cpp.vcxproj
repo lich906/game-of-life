@@ -168,7 +168,6 @@
     <ClInclude Include="include\CombinedDrawCallback.hpp" />
     <ClInclude Include="include\CommonEventProcessor.h" />
     <ClInclude Include="include\Config.h" />
-    <ClInclude Include="include\Constants.h" />
     <ClInclude Include="include\EventCollector.h" />
     <ClInclude Include="include\DelimitersDrawer.h" />
     <ClInclude Include="include\InitialStateHandler.h" />

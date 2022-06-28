@@ -1,7 +1,7 @@
 #pragma once
 #include "EventCollector.h"
 #include "CellState.h"
-#include "Constants.h"
+#include "Config.h"
 #include <vector>
 
 class InitialStateHandler
@@ -14,8 +14,8 @@ public:
 	EventResFlag::Flag ProcessEvents(const std::vector<EventCollector::EventData>& eventsData);
 
 private:
-	const int maxX = WINDOW_WIDTH / CELL_SIZE;
-	const int maxY = WINDOW_HEIGHT / CELL_SIZE;
+	const int maxX = Config::GetWindowWidth() / Config::GetCellSize();
+	const int maxY = Config::GetWindowHeight() / Config::GetCellSize();
 
 	/*
 	Params:

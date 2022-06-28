@@ -1,6 +1,5 @@
 #pragma once
 #include "EventCollector.h"
-#include "Constants.h"
 
 class CommonEventProcessor
 {

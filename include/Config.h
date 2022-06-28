@@ -13,9 +13,9 @@ const sf::Color LIVE_CELL_COLOR(0xF0F8FFFF);
 
 const sf::Color DEAD_CELL_COLOR(0x000000FF);
 
-constexpr unsigned DELIMITERS_FADING_COEFF = 8;
+constexpr int DELIMITERS_FADING_COEFF = 8;
 
-constexpr size_t RENDER_FREQ = 10;
+constexpr size_t FRAME_REFRESH_TIME = 10;
 
 constexpr size_t STATE_REFRESH_TIME = 100;
 
@@ -27,25 +27,25 @@ constexpr unsigned WINDOW_HEIGHT = 600;
 class Config
 {
 public:
-	void ReadFromFile(const std::string& fileName);
+	static void ReadFromFile(const std::string& fileName);
 
-	unsigned GetCellSize() const;
+	static unsigned GetCellSize();
 
-	sf::Color GetDelimiterColor() const;
+	static sf::Color GetDelimiterColor();
 
-	sf::Color GetLiveCellColor() const;
+	static sf::Color GetLiveCellColor();
 
-	sf::Color GetDeadCellColor() const;
+	static sf::Color GetDeadCellColor();
 
-	unsigned GetDelimitersFadingCoeff() const;
+	static int GetDelimitersFadingCoeff();
 
-	size_t GetRenderFreq() const;
+	static size_t GetFrameRefreshTime();
 
-	size_t GetStateRefreshTime() const;
+	static size_t GetStateRefreshTime();
 
-	unsigned GetWindowWidth() const;
+	static unsigned GetWindowWidth();
 
-	unsigned GetWindowHeight() const;
+	static unsigned GetWindowHeight();
 
 private:
 	enum class State
@@ -70,7 +70,7 @@ private:
 		WindowHeight
 	};
 	
-	const std::map<const std::string, AvailableVariables> availableVariableNames = {
+	static inline const std::map<const std::string, AvailableVariables> availableVariableNames = {
 		{ "CELL_SIZE", AvailableVariables::CellSize },
 		{ "DELIMITER_COLOR", AvailableVariables::DelimiterColor },
 		{ "LIVE_CELL_COLOR", AvailableVariables::LiveCellColor },
@@ -81,31 +81,33 @@ private:
 		{ "WINDOW_HEIGHT", AvailableVariables::WindowHeight }
 	};
 
-	State ProcessSymbol(char symbol, State curState);
+	static State ProcessSymbol(char symbol, State curState);
 
-	void SeekNextLine();
+	static void SeekNextLine();
 
-	void ProcessKeyValuePair();
+	static void ProcessKeyValuePair();
 
-	std::ifstream file;
+	static void SetDefaultValues();
 
-	std::string key, value;
+	static inline std::ifstream file;
 
-	unsigned cellSize = Default::CELL_SIZE;
+	static inline std::string key, value;
 
-	sf::Color delimiterColor = Default::DELIMITER_COLOR;
+	static inline unsigned cellSize = Default::CELL_SIZE;
 
-	sf::Color liveCellColor = Default::LIVE_CELL_COLOR;
+	static inline sf::Color delimiterColor = Default::DELIMITER_COLOR;
 
-	sf::Color deadCellColor = Default::DEAD_CELL_COLOR;
+	static inline sf::Color liveCellColor = Default::LIVE_CELL_COLOR;
 
-	unsigned delimitersFadingCoeff = Default::DELIMITERS_FADING_COEFF;
+	static inline sf::Color deadCellColor = Default::DEAD_CELL_COLOR;
 
-	size_t renderFreq = Default::RENDER_FREQ;
+	static inline int delimitersFadingCoeff = Default::DELIMITERS_FADING_COEFF;
 
-	size_t stateRefreshTime = Default::STATE_REFRESH_TIME;
+	static inline size_t frameRefreshTime = Default::FRAME_REFRESH_TIME;
 
-	unsigned windowWidth = Default::WINDOW_WIDTH;
+	static inline size_t stateRefreshTime = Default::STATE_REFRESH_TIME;
 
-	unsigned windowHeight = Default::WINDOW_HEIGHT;
+	static inline unsigned windowWidth = Default::WINDOW_WIDTH;
+
+	static inline unsigned windowHeight = Default::WINDOW_HEIGHT;
 };

@@ -56,9 +56,6 @@
     <ClInclude Include="include\EventCollector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Constants.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>

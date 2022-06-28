@@ -33,8 +33,8 @@ void InitialStateHandler::ResetState()
 
 void InitialStateHandler::AddCell(int mouseX, int mouseY)
 {
-	int x = mouseX / CELL_SIZE;
-	int y = mouseY / CELL_SIZE;
+	int x = mouseX / Config::GetCellSize();
+	int y = mouseY / Config::GetCellSize();
 
 	if(!AddCellIfNecessary(x, y, true))
 	{

@@ -1,6 +1,9 @@
 #include "Config.h"
 
+using namespace std::string_literals;
+
 void Config::ReadFromFile(const std::string& fileName)
+try
 {
 	file.open(fileName);
 
@@ -43,48 +46,54 @@ void Config::ReadFromFile(const std::string& fileName)
 
 	file.close();
 }
+catch (const std::runtime_error& e)
+{
+	SetDefaultValues();
+	
+	throw std::runtime_error(e.what() + "\nConfig variables was set to default."s);
+}
 
-unsigned Config::GetCellSize() const
+unsigned Config::GetCellSize()
 {
 	return cellSize;
 }
 
-sf::Color Config::GetDelimiterColor() const
+sf::Color Config::GetDelimiterColor()
 {
 	return delimiterColor;
 }
 
-sf::Color Config::GetLiveCellColor() const
+sf::Color Config::GetLiveCellColor()
 {
 	return liveCellColor;
 }
 
-sf::Color Config::GetDeadCellColor() const
+sf::Color Config::GetDeadCellColor()
 {
 	return deadCellColor;
 }
 
-unsigned Config::GetDelimitersFadingCoeff() const
+int Config::GetDelimitersFadingCoeff()
 {
 	return delimitersFadingCoeff;
 }
 
-size_t Config::GetRenderFreq() const
+size_t Config::GetFrameRefreshTime()
 {
-	return renderFreq;
+	return frameRefreshTime;
 }
 
-size_t Config::GetStateRefreshTime() const
+size_t Config::GetStateRefreshTime()
 {
 	return stateRefreshTime;
 }
 
-unsigned Config::GetWindowWidth() const
+unsigned Config::GetWindowWidth()
 {
 	return windowWidth;
 }
 
-unsigned Config::GetWindowHeight() const
+unsigned Config::GetWindowHeight()
 {
 	return windowHeight;
 }
@@ -155,7 +164,7 @@ void Config::ProcessKeyValuePair()
 			delimitersFadingCoeff = std::stoi(value);
 			break;
 		case AvailableVariables::RenderFreq:
-			renderFreq = std::stoi(value);
+			frameRefreshTime = std::stoi(value);
 			break;
 		case AvailableVariables::StateRefreshTime:
 			stateRefreshTime = std::stoi(value);
@@ -193,4 +202,17 @@ void Config::ProcessKeyValuePair()
 	{
 		throw std::runtime_error("Error was occured while parsing config file. Failed hexadecimal color value '" + value + "' for '" + key + "' variable.");
 	}
+}
+
+void Config::SetDefaultValues()
+{
+	cellSize = Default::CELL_SIZE;
+	delimiterColor = Default::DELIMITER_COLOR;
+	liveCellColor = Default::LIVE_CELL_COLOR;
+	deadCellColor = Default::DEAD_CELL_COLOR;
+	delimitersFadingCoeff = Default::DELIMITERS_FADING_COEFF;
+	frameRefreshTime = Default::FRAME_REFRESH_TIME;
+	stateRefreshTime = Default::STATE_REFRESH_TIME;
+	windowWidth = Default::WINDOW_WIDTH;
+	windowHeight = Default::WINDOW_HEIGHT;
 }
