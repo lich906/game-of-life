@@ -55,7 +55,8 @@ private:
 		ReadValue,
 		ValueHasBeenRead,
 		SkipComment,
-		SyntaxError
+		SyntaxError,
+		NewLine
 	};
 
 	enum class AvailableVariables
@@ -64,7 +65,7 @@ private:
 		DelimiterColor,
 		LiveCellColor,
 		DelimitersFadingCoeff,
-		RenderFreq,
+		FrameRefreshTime,
 		StateRefreshTime,
 		WindowWidth,
 		WindowHeight
@@ -75,7 +76,7 @@ private:
 		{ "DELIMITER_COLOR", AvailableVariables::DelimiterColor },
 		{ "LIVE_CELL_COLOR", AvailableVariables::LiveCellColor },
 		{ "DELIMITERS_FADING_COEFF", AvailableVariables::DelimitersFadingCoeff },
-		{ "RENDER_FREQ", AvailableVariables::RenderFreq },
+		{ "FRAME_REFRESH_TIME", AvailableVariables::FrameRefreshTime },
 		{ "STATE_REFRESH_TIME", AvailableVariables::StateRefreshTime },
 		{ "WINDOW_WIDTH", AvailableVariables::WindowWidth },
 		{ "WINDOW_HEIGHT", AvailableVariables::WindowHeight }

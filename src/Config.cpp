@@ -12,7 +12,7 @@ try
 		throw std::runtime_error("Failed to read config from file '" + fileName + "'. Failed to open file.");
 	}
 
-	State state = State::ReadKey;
+	State state = State::NewLine;
 
 	char symbol;
 	while (!file.eof())
@@ -36,6 +36,9 @@ try
 			break;
 		case State::ValueHasBeenRead:
 			ProcessKeyValuePair();
+			key.clear();
+			value.clear();
+			state = State::NewLine;
 			break;
 		case State::SyntaxError:
 			throw std::runtime_error("Error was occured while parsing config file. Syntax error.");
@@ -111,6 +114,9 @@ Config::State Config::ProcessSymbol(char symbol, State curState)
 		case State::ReadValue:
 			SeekNextLine();
 			return State::ValueHasBeenRead;
+		case State::NewLine:
+			SeekNextLine();
+			break;
 		default:
 			break;
 		}
@@ -121,6 +127,8 @@ Config::State Config::ProcessSymbol(char symbol, State curState)
 			return State::SyntaxError;
 		case State::ReadValue:
 			return State::ValueHasBeenRead;
+		case State::NewLine:
+			return curState;
 		default:
 			break;
 		}
@@ -131,10 +139,19 @@ Config::State Config::ProcessSymbol(char symbol, State curState)
 			return State::KeyHasBeenRead;
 		case State::ReadValue:
 			return State::SyntaxError;
+		case State::NewLine:
+			return State::SyntaxError;
 		default:
 			break;
 		}
 	default:
+		switch (curState)
+		{
+		case State::NewLine:
+			return State::ReadKey;
+		default:
+			break;
+		}
 		break;
 	}
 
@@ -163,7 +180,7 @@ void Config::ProcessKeyValuePair()
 		case AvailableVariables::DelimitersFadingCoeff:
 			delimitersFadingCoeff = std::stoi(value);
 			break;
-		case AvailableVariables::RenderFreq:
+		case AvailableVariables::FrameRefreshTime:
 			frameRefreshTime = std::stoi(value);
 			break;
 		case AvailableVariables::StateRefreshTime:
@@ -189,10 +206,10 @@ void Config::ProcessKeyValuePair()
 		switch (availableVariableNames.at(key))
 		{
 		case AvailableVariables::DelimiterColor:
-			delimiterColor = sf::Color(std::stoi(value, nullptr, 16));
+			delimiterColor = sf::Color(std::stoul(value, nullptr, 16));
 			break;
 		case AvailableVariables::LiveCellColor:
-			liveCellColor = sf::Color(std::stoi(value, nullptr, 16));
+			liveCellColor = sf::Color(std::stoul(value, nullptr, 16));
 			break;
 		default:
 			break;
@@ -200,7 +217,7 @@ void Config::ProcessKeyValuePair()
 	}
 	catch (const std::exception& e)
 	{
-		throw std::runtime_error("Error was occured while parsing config file. Failed hexadecimal color value '" + value + "' for '" + key + "' variable.");
+		throw std::runtime_error("Error was occured while parsing config file. Failed to parse hexadecimal color value '" + value + "' for '" + key + "' variable.");
 	}
 }
 
