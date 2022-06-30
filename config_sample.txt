@@ -1,0 +1,35 @@
+#         ________     This is a sample config file for "Game of Life v0.3"    _________
+#              Exectable reads configuration info from "config.txt" from the directory 
+#         where .exe is placed. File "config_sample.txt" represents sample of content of
+#         config file. It contains all available config variables with its default
+#         values assigned to them.
+#
+#              You can rename "config_sample.txt" file to "config.txt" and use it.
+#
+#              If config file does not contain one of available variables then default
+#         value is used. Variable names are case sensitive. Numeric values are only
+#         positive integers.
+#              
+#              Basic syntax: <variable name>=<value>
+#              "#" symbol describes comment line
+
+WINDOW_WIDTH=800           # Sets custom window width in pixels
+
+WINDOW_HEIGHT=600          # Sets custom window height in pixels
+
+CELL_SIZE=10               # Sets cell size in pixels
+
+DELIMITERS_FADING_COEFF=8  # This option determines how fast delimiters will fade.
+                           # Actual speed depends on FRAME_REFRESH_TIME variable.
+
+FRAME_REFRESH_TIME=10      # Determines time interval between two frames in milliseconds.
+
+STATE_REFRESH_TIME=100     # Determines time interval between two states of cell state machine.
+                           # The lower value, the faster game.
+
+# Next variables uses same color format:
+# 0xRRGGBBAA
+
+DELIMITER_COLOR=0xAAAAAAFF # Sets delimiter color
+
+LIVE_CELL_COLOR=0xF0F8FFFF # Sets live cell color
