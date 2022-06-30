@@ -36,5 +36,9 @@ private:
 	*/
 	bool AddCellIfNecessary(int x, int y, bool alive);
 
+	void KillCellAtPos(int x, int y);
+
+	std::vector<CellState>::iterator FindCellAtPos(int x, int y);
+
 	std::vector<CellState> m_state;
 };

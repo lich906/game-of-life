@@ -38,6 +38,8 @@ void InitialStateHandler::AddCell(int mouseX, int mouseY)
 
 	if(!AddCellIfNecessary(x, y, true))
 	{
+		KillCellAtPos(x, y);
+
 		return;
 	}
 
@@ -86,9 +88,7 @@ void InitialStateHandler::AddCell(int mouseX, int mouseY)
 
 bool InitialStateHandler::AddCellIfNecessary(int x, int y, bool alive)
 {
-	auto cell = std::find_if(m_state.begin(), m_state.end(), [x, y](const CellState& cs) {
-		return cs.GetPos().x == x && cs.GetPos().y == y;
-	});
+	auto cell = FindCellAtPos(x, y);
 
 	if (cell != m_state.end())
 	{
@@ -107,4 +107,18 @@ bool InitialStateHandler::AddCellIfNecessary(int x, int y, bool alive)
 	}
 
 	return false;
+}
+
+void InitialStateHandler::KillCellAtPos(int x, int y)
+{
+	auto cell = FindCellAtPos(x, y);
+
+	cell->Kill();
+}
+
+std::vector<CellState>::iterator InitialStateHandler::FindCellAtPos(int x, int y)
+{
+	return std::find_if(m_state.begin(), m_state.end(), [x, y](const CellState& cs) {
+		return cs.GetPos().x == x && cs.GetPos().y == y;
+	});
 }
