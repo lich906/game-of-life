@@ -11,4 +11,5 @@ This C++ application implements classic [Conway's Game of Life](https://en.wikip
 * Note that the game will not stop if a cyclic or stable state is reached
 
 ---
-To adjust game process you can edit constants in `Constants.h` file
+To adjust game process you can use `config.txt` file.
+Explore `config_sample.txt` file for more info.
