@@ -90,9 +90,9 @@ private:
 
 	static void SetDefaultValues();
 
-	static inline std::ifstream file;
+	static inline std::ifstream m_file;
 
-	static inline std::string key, value;
+	static inline std::string m_key, m_value;
 
 	static inline unsigned cellSize = Default::CELL_SIZE;
 

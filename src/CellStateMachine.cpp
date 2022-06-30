@@ -17,12 +17,13 @@ void CellStateMachine::NextState()
 	m_bufferState.clear();
 	size_t adjacentLiveCells;
 
+	RemoveRedundantDeadCells(m_state);
+
 	for (const CellState& cellState : m_state)
 	{
 		auto cellPos = cellState.GetPos();
-		adjacentLiveCells = CountAdjacentLiveCells(cellPos);
+		adjacentLiveCells = CountAdjacentLiveCells(m_state, cellPos);
 
-		
 		if (cellState.IsAlive())
 		{
 			if (adjacentLiveCells < 2 || adjacentLiveCells > 3)
@@ -39,7 +40,7 @@ void CellStateMachine::NextState()
 			m_bufferState.push_back(CellState(cellState).Revive());
 			AddAdjacentDeadCellsToBuffer(cellPos);
 		}
-		else if (adjacentLiveCells)
+		else
 		{
 			m_bufferState.push_back(cellState);
 		}
@@ -53,9 +54,9 @@ const std::vector<CellState>& CellStateMachine::GetState() const
 	return m_state;
 }
 
-size_t CellStateMachine::CountAdjacentLiveCells(const CellState::Pos& cellPos)
+size_t CellStateMachine::CountAdjacentLiveCells(const std::vector<CellState>& state, const CellState::Pos& cellPos) const
 {
-	return std::count_if(m_state.begin(), m_state.end(), [&cellPos](const CellState& cs) {
+	return std::count_if(state.begin(), state.end(), [&cellPos](const CellState& cs) {
 		return 
 			cs.IsAlive() && 
 			cs.GetPos() != cellPos && 
@@ -66,12 +67,7 @@ size_t CellStateMachine::CountAdjacentLiveCells(const CellState::Pos& cellPos)
 
 void CellStateMachine::PushToBufferIfNotExists(const CellState& cell)
 {
-	if (std::find_if(m_state.begin(), m_state.end(), [&cell](const CellState& cs) {
-		return cs.GetPos() == cell.GetPos();
-	}) == m_state.end() && 
-	std::find_if(m_bufferState.begin(), m_bufferState.end(), [&cell](const CellState& cs) {
-		return cs.GetPos() == cell.GetPos();
-	}) == m_bufferState.end())
+	if (!CellAtPosExists(m_bufferState, cell.GetPos()) && !CellAtPosExists(m_state, cell.GetPos()))
 	{
 		m_bufferState.push_back(cell);
 	}
@@ -124,4 +120,25 @@ void CellStateMachine::AddAdjacentDeadCellsToBuffer(const CellState::Pos& cellPo
 		}
 	}
 
+}
+
+bool CellStateMachine::CellAtPosExists(const std::vector<CellState>& state, const CellState::Pos& pos) const
+{
+	return std::any_of(state.begin(), state.end(), [&pos](const CellState& cs) {
+		return cs.GetPos() == pos;
+	});
+}
+
+void CellStateMachine::RemoveRedundantDeadCells(std::vector<CellState>& state)
+{
+	std::vector<CellState> tmp;
+	for (const auto& cs : state)
+	{
+		if (cs.IsAlive() || CountAdjacentLiveCells(state, cs.GetPos()))
+		{
+			tmp.push_back(cs);
+		}
+	}
+
+	state = std::move(tmp);
 }

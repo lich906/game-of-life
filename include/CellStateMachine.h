@@ -16,11 +16,15 @@ public:
 private:
 	const int maxX, maxY;
 
-	size_t CountAdjacentLiveCells(const CellState::Pos& cellPos);
+	size_t CountAdjacentLiveCells(const std::vector<CellState>& state, const CellState::Pos& cellPos) const;
 
 	void PushToBufferIfNotExists(const CellState& cell);
 
 	void AddAdjacentDeadCellsToBuffer(const CellState::Pos& cell);
+
+	bool CellAtPosExists(const std::vector<CellState>& state, const CellState::Pos& pos) const;
+
+	void RemoveRedundantDeadCells(std::vector<CellState>& state);
 
 	std::vector<CellState> m_state;
 

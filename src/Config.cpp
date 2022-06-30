@@ -5,9 +5,9 @@ using namespace std::string_literals;
 void Config::ReadFromFile(const std::string& fileName)
 try
 {
-	file.open(fileName);
+	m_file.open(fileName);
 
-	if (!file.is_open())
+	if (!m_file.is_open())
 	{
 		throw std::runtime_error("Failed to read config from file '" + fileName + "'. Failed to open file.");
 	}
@@ -15,18 +15,18 @@ try
 	State state = State::NewLine;
 
 	char symbol;
-	while (!file.eof())
+	while (!m_file.eof())
 	{
-		file.get(symbol);
+		m_file.get(symbol);
 		state = ProcessSymbol(symbol, state);
 
 		switch (state)
 		{
 		case State::ReadKey:
-			key.push_back(symbol);
+			m_key.push_back(symbol);
 			break;
 		case State::ReadValue:
-			value.push_back(symbol);
+			m_value.push_back(symbol);
 			break;
 		case State::SkipComment:
 			SeekNextLine();
@@ -36,8 +36,8 @@ try
 			break;
 		case State::ValueHasBeenRead:
 			ProcessKeyValuePair();
-			key.clear();
-			value.clear();
+			m_key.clear();
+			m_value.clear();
 			state = State::NewLine;
 			break;
 		case State::SyntaxError:
@@ -47,11 +47,16 @@ try
 		}
 	}
 
-	file.close();
+	m_file.close();
 }
 catch (const std::runtime_error& e)
 {
 	SetDefaultValues();
+
+	if (m_file.is_open())
+	{
+		m_file.close();
+	}
 	
 	throw std::runtime_error(e.what() + "\nConfig variables was set to default."s);
 }
@@ -160,64 +165,64 @@ Config::State Config::ProcessSymbol(char symbol, State curState)
 
 void Config::SeekNextLine()
 {
-	while (file.get() != '\n' && !file.eof());
+	while (m_file.get() != '\n' && !m_file.eof());
 }
 
 void Config::ProcessKeyValuePair()
 {
-	if (availableVariableNames.find(key) == availableVariableNames.end())
+	if (availableVariableNames.find(m_key) == availableVariableNames.end())
 	{
-		throw std::runtime_error("Error was occured while parsing config file. No such config variable '" + key + "'.");
+		throw std::runtime_error("Error was occured while parsing config file. No such config variable '" + m_key + "'.");
 	}
 
 	try
 	{
-		switch (availableVariableNames.at(key))
+		switch (availableVariableNames.at(m_key))
 		{
 		case AvailableVariables::CellSize:
-			cellSize = std::stoi(value);
+			cellSize = std::stoi(m_value);
 			break;
 		case AvailableVariables::DelimitersFadingCoeff:
-			delimitersFadingCoeff = std::stoi(value);
+			delimitersFadingCoeff = std::stoi(m_value);
 			break;
 		case AvailableVariables::FrameRefreshTime:
-			frameRefreshTime = std::stoi(value);
+			frameRefreshTime = std::stoi(m_value);
 			break;
 		case AvailableVariables::StateRefreshTime:
-			stateRefreshTime = std::stoi(value);
+			stateRefreshTime = std::stoi(m_value);
 			break;
 		case AvailableVariables::WindowHeight:
-			windowHeight = std::stoi(value);
+			windowHeight = std::stoi(m_value);
 			break;
 		case AvailableVariables::WindowWidth:
-			windowWidth = std::stoi(value);
+			windowWidth = std::stoi(m_value);
 			break;
 		default:
 			break;
 		}
 	}
-	catch (const std::exception& e)
+	catch (const std::exception&)
 	{
-		throw std::runtime_error("Error was occured while parsing config file. Failed parse numeric value '" + value + "' for '" + key + "' variable.");
+		throw std::runtime_error("Error was occured while parsing config file. Failed parse numeric value '" + m_value + "' for '" + m_key + "' variable.");
 	}
 
 	try
 	{
-		switch (availableVariableNames.at(key))
+		switch (availableVariableNames.at(m_key))
 		{
 		case AvailableVariables::DelimiterColor:
-			delimiterColor = sf::Color(std::stoul(value, nullptr, 16));
+			delimiterColor = sf::Color(std::stoul(m_value, nullptr, 16));
 			break;
 		case AvailableVariables::LiveCellColor:
-			liveCellColor = sf::Color(std::stoul(value, nullptr, 16));
+			liveCellColor = sf::Color(std::stoul(m_value, nullptr, 16));
 			break;
 		default:
 			break;
 		}
 	}
-	catch (const std::exception& e)
+	catch (const std::exception&)
 	{
-		throw std::runtime_error("Error was occured while parsing config file. Failed to parse hexadecimal color value '" + value + "' for '" + key + "' variable.");
+		throw std::runtime_error("Error was occured while parsing config file. Failed to parse hexadecimal color value '" + m_value + "' for '" + m_key + "' variable.");
 	}
 }
 
