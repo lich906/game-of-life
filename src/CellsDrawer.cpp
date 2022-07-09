@@ -1,6 +1,6 @@
 #include "CellsDrawer.h"
 
-Window::DrawCallback CellsDrawer::GetDrawCallback()
+Window::DrawCallback CellsDrawer::GetDrawCallback() const
 {
 	return DrawCallback;
 }

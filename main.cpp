@@ -1,7 +1,7 @@
 #include "DelimitersDrawer.h"
 #include "CellsDrawer.h"
 #include "InitialStateHandler.h"
-#include "CombinedDrawCallback.hpp"
+#include "CombinedDrawCallback.h"
 #include "CellStateMachine.h"
 #include "CommonEventProcessor.h"
 #include "Config.h"
@@ -32,10 +32,7 @@ int main()
 
 	cellsDrawer.AttachCellsState(initStateHandler.GetInitialState());
 
-	CombinedDrawCallback combinedDrawCallback;
-	combinedDrawCallback
-		.Combine(delimitersDrawer.GetDrawCallback())
-		.Combine(cellsDrawer.GetDrawCallback());
+	CombinedDrawCallback combinedDrawCallback({ &delimitersDrawer, &cellsDrawer });
 
 	window.SetDrawCallback(combinedDrawCallback.Get());
 

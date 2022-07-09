@@ -1,7 +1,7 @@
 #include "DelimitersDrawer.h"
 #include <algorithm>
 
-Window::DrawCallback DelimitersDrawer::GetDrawCallback()
+Window::DrawCallback DelimitersDrawer::GetDrawCallback() const
 {
 	return DrawCallback;
 }

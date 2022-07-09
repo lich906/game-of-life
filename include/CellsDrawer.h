@@ -2,11 +2,12 @@
 #include "Window.h"
 #include "CellState.h"
 #include "Config.h"
+#include "IDrawer.h"
 
-class CellsDrawer
+class CellsDrawer : public IDrawer
 {
 public:
-	static Window::DrawCallback GetDrawCallback();
+	Window::DrawCallback GetDrawCallback() const override;
 
 	static void AttachCellsState(const std::vector<CellState>& state);
 
