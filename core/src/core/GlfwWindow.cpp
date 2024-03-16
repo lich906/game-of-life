@@ -175,6 +175,21 @@ void GlfwWindow::Init(const WindowProps& props)
 		event::MouseMovedEvent event((float)xPos, (float)yPos);
 		data.eventSignal(event);
 	});
+
+	glfwSetCursorEnterCallback(m_window, [](GLFWwindow* window, int entered) {
+		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+		if (entered)
+		{
+			event::MouseEnterEvent event;
+			data.eventSignal(event);
+		}
+		else
+		{
+			event::MouseLeaveEvent event;
+			data.eventSignal(event);
+		}
+	});
 }
 
 void GlfwWindow::Shutdown()

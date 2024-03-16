@@ -94,4 +94,28 @@ public:
 	EVENT_CLASS_TYPE(MouseButtonReleased)
 };
 
+class MouseEnterEvent : public Event
+{
+public:
+	std::string ToString() const override
+	{
+		return "MouseEnterEvent";
+	}
+
+	EVENT_CLASS_TYPE(MouseEnter)
+	EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+};
+
+class MouseLeaveEvent : public Event
+{
+public:
+	std::string ToString() const override
+	{
+		return "MouseLeaveEvent";
+	}
+
+	EVENT_CLASS_TYPE(MouseLeave)
+	EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+};
+
 } // namespace core::event

@@ -53,8 +53,8 @@ void Application::Run()
 		Timestep timestep = time - m_lastFrameTime;
 		m_lastFrameTime = time;
 
-		for (auto layerIt = m_layerStack.GetTopLayer(); layerIt != m_layerStack.GetBottomLayer(); )
-			(*++layerIt)->OnUpdate(timestep);
+		for (auto layerIt = m_layerStack.GetBottomLayer(); layerIt != m_layerStack.GetTopLayer(); )
+			(*layerIt++)->OnUpdate(timestep);
 
 		m_window->OnUpdate();
 
