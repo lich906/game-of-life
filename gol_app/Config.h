@@ -1,6 +1,6 @@
 #pragma once
 
-class Configuration
+class Config
 {
 public:
 	int GetCellSize() { return 30; }

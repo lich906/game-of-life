@@ -3,19 +3,21 @@
 #include <optional>
 
 #include "core/core.h"
-#include "Configuration.h"
+#include "Config.h"
 #include "core/event/MouseEvent.h"
 #include "Logger.h"
 
-class CellsHighlightLayer : public core::Layer
+class VFXLayer : public core::Layer
 {
 public:
-	CellsHighlightLayer(Configuration& conf, Logger& logger)
+	VFXLayer(Config& conf, Logger& logger)
 		: Layer("CellsHighlightLayer"),
 		m_conf(conf),
 		m_logger(logger) {};
 
 	void OnEvent(core::event::Event& event) override;
+
+	void OnUpdate(core::Timestep ts) override;
 
 private:
 	struct BoundingRect
@@ -38,6 +40,6 @@ private:
 	BoundingRect CalcBoundingRect(int x, int y, int cellSize) const;
 
 	std::optional<HoveredCell> m_hoveredCell;
-	Configuration& m_conf;
+	Config& m_conf;
 	Logger& m_logger;
 };
